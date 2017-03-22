@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:context="http://www.springframework.org/schema/context" 
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+             http://www.springframework.org/schema/context 
+             http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+             http://www.springframework.org/schema/tx
+             http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">      
+
+	<bean id="ctrCadastroUsuario" class="br.sca.controller.CtrCadastroUsuario">
+            <property name="usuarioDAO" ref="usuarioDAO"/>
+	</bean>
+
+        <bean id="ctrCadastroCurso" class="br.sca.controller.CtrCadastroCurso">
+            <property name="cursoDAO" ref="cursoDAO"/>
+	</bean>       
+
+	<bean id="ctrCadastroAluno" class="br.sca.controller.CtrCadastroAluno">
+            <property name="alunoDAO" ref="alunoDAO" />
+	</bean>
+
+	<bean id="usuarioDAO" class="br.sca.dao.DAOFactory" factory-method="getUsuarioDAO">
+        </bean>
+
+        <bean id="cursoDAO" class="br.sca.dao.DAOFactory" factory-method="getCursoDAO">
+        </bean>
+
+        <bean id="alunoDAO" class="br.sca.dao.DAOFactory" factory-method="getAlunoDAO">
+        </bean>
+
+
+<!--  
+    Para que um sessionFactory seja injetado nas classes do tipo  DAO é preciso  definir
+    um bean para cada DAO e injetar  um sessionFactory  em cada um, ou, acrescentando  o
+    elemento xml abaixo, bastará anotar com @Autowired a variável de instância.  
+    Os DAOs encontram-se no package br.sca.dao.
+-->
+    <context:component-scan base-package="br.sca.dao" />
+    
+<!-- 
+    O elemento xml abaixo habilita o controle de transação e define  um  gerenciador  de 
+    transacão denominado  transactionManager.   
+ -->
+    <tx:annotation-driven />
+
+    <bean id="transactionManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="sessionFactory" 
+          class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="annotatedClasses">
+            <list>                
+                <value>br.sca.model.Curso</value>
+                <value>br.sca.model.Pessoa</value>
+                <value>br.sca.model.Aluno</value>
+                <value>br.sca.model.Professor</value>
+                <value>br.sca.model.Disciplina</value>
+                <value>br.sca.model.Turma</value>
+                <value>br.sca.model.Avaliacao</value>
+                <value>br.sca.model.Usuario</value>
+            </list>
+        </property>
+        
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://localhost:5432/SCAWEB"/>
+        <property name="username" value="aluno" />
+        <property name="password" value="12345" />
+    </bean>
+
+    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://localhost:5432/paulomsf_SCAH"/>
+        <property name="username" value="paulomsf" />
+        <property name="password" value="p@fr#19eL" />
+    </bean>-->
+
+</beans>

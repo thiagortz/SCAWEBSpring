@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+   
+                
+                <div id="blocoConteudoAluno">
+                    <div class="conteudo">
+                        
+                        <h:form id="formConteudoAluno">
+                            <div id="blocoMensagem">
+                                 <h:outputText value="#{alunoBean.erro}" styleClass="erro"/>
+                            </div>
+                            <fieldset>
+                                <legend>Dados do Aluno</legend>
+                                <h:panelGrid columns="6"  styleClass="campos">
+                                    <h:outputLabel value="Matrícula:" for="matricula"/>
+                                    <h:inputText id="matricula" value="#{alunoBean.aluno.matricula}"
+                                                 readonly = "#{alunoBean.velho}"/>
+                                    <h:outputLabel value="Nome:" for="nome"/>
+                                    <h:inputText id="nome" value="#{alunoBean.aluno.nome}"/>
+                                    <h:outputLabel value="Identidade:" for="identidade"/>
+                                    <h:inputText id="identidade" value="#{alunoBean.aluno.identidade}"/>
+                                    <h:outputLabel value="Orgâo Expedidor:" for="orgaoExpedidor"/>
+                                    <h:inputText id="orgaoExpedidor" value="#{alunoBean.aluno.orgaoExpedidor}"/>
+                                    <h:outputLabel value="Uf Identidade:" for="ufIdentidade"/>
+                                    <h:selectOneMenu value="#{alunoBean.aluno.ufIdentidade}">
+                                        <f:selectItems value="#{siglasBean.siglasEstado}" var ="p"
+                                                       itemValue="#{p}" itemLabel="#{p}"/>
+                                    </h:selectOneMenu>
+                                    <h:outputLabel value="CPF:" for="cpf"/>
+                                    <p:inputMask id="cpf" value="#{alunoBean.aluno.cpf}" mask="999.999.999-99"/>
+                                    <h:outputLabel value="Sexo:" for="sexo"/>
+                                    <h:selectOneMenu value="#{alunoBean.aluno.sexo}">
+                                        <f:selectItems value="#{siglasBean.siglasSexo}" var ="p"
+                                                       itemValue="#{p}" itemLabel="#{p}"/>
+                                    </h:selectOneMenu>
+                                    <h:outputLabel value="Data de Nascimento:" for="dataNascimento"/>
+                                    <p:calendar pattern="dd/MM/yyyy" value="#{alunoBean.aluno.dataNascimento.time}"/>
+                                    <h:outputLabel value="Logradouro:" for="logradouro"/>
+                                    <h:inputText id="logradouro" value="#{alunoBean.aluno.logradouro}"/>
+                                    <h:outputLabel value="Número:" for="numero"/>
+                                    <h:inputText id="numero" value="#{alunoBean.aluno.numero}"/>
+                                    <h:outputLabel value="Complemento:" for="complemento"/>
+                                    <h:inputText id="complemento" value="#{alunoBean.aluno.complemento}"/>
+                                    <h:outputLabel value="Bairro:" for="bairro"/>
+                                    <h:inputText id="bairro" value="#{alunoBean.aluno.bairro}"/>
+                                    <h:outputLabel value="Cidade:" for="cidade"/>
+                                    <h:inputText id="cidade" value="#{alunoBean.aluno.cidade}"/>
+                                    <h:outputLabel value="Uf:" for="uf"/>
+                                     <h:selectOneMenu value="#{alunoBean.aluno.uf}">
+                                        <f:selectItems value="#{siglasBean.siglasEstado}" var ="p"
+                                                       itemValue="#{p}" itemLabel="#{p}"/>
+                                     </h:selectOneMenu>
+                                    <h:outputLabel value="Cep:" for="cep"/>
+                                    <p:inputMask id="cep" value="#{alunoBean.aluno.cep}" mask="99999-999"/>
+                                    <h:outputLabel value="Email:" for="email"/>
+                                    <h:inputText id="email" value="#{alunoBean.aluno.email}"/>
+                                    <h:outputLabel value="Tel Residencial:" for="telResidencial"/>
+                                    <p:inputMask id="telResidencial" value="#{alunoBean.aluno.telResidencial}" mask="(99)9999-9999"/>
+                                    <h:outputLabel value="Tel Comercial:" for="telComercial"/>
+                                    <p:inputMask id="telComercial" value="#{alunoBean.aluno.telComercial}" mask="(99)9999-9999"/>
+                                    <h:outputLabel value="Tel Celular:" for="telCelular"/>
+                                    <p:inputMask id="telCelular" value="#{alunoBean.aluno.telCelular}" mask="(99)9999-9999"/>
+                                    <h:outputLabel value="Ano Semestre Início:" for="anoSemestreInicio"/>
+                                    <p:inputMask id="anoSemestreInicio" value="#{alunoBean.aluno.anoSemestreInicio}" mask="9999-9" readonly="true"/>
+                                    <h:outputLabel value="Curso:" for="curso"/>
+                                     <h:selectOneMenu value="#{alunoBean.codigoCurso}">
+                                        <f:selectItems value="#{cursoBean.cursos}" var ="p"
+                                                       itemValue="#{p.codigo}" itemLabel="#{p.descricao}"/>
+                                     </h:selectOneMenu>
+                                </h:panelGrid>
+                            </fieldset>
+
+                            <h:commandButton value="Gravar" action="#{alunoBean.gravar}">
+                                <f:ajax execute="@form" render=":formConteudoAluno :formTabelaAluno"/>
+                            </h:commandButton>
+                            <h:commandButton value="Limpar" action="#{alunoBean.limpar}">
+                                <f:ajax execute="@form" render=":formConteudoAluno :formTabelaAluno"/>
+                            </h:commandButton>
+
+                            <h:commandButton value="Excluir" onclick="confirmationExclusaoAluno.show()">
+                                <f:ajax execute="@form" render=":formConteudoAluno :formTabelaAluno"/>
+                            </h:commandButton>
+
+                        </h:form>
+
+                        <h:form id="formTabelaAluno">
+                            <div id="blocoMensagem">
+                                 <h:outputText value="#{alunoBean.erro}" styleClass="erro"/>
+                            </div>
+
+                            <h:outputText value="Lista de Alunos" styleClass="cabecalho" />
+
+                            <h:dataTable value="#{alunoBean.alunos}" var="p"
+                                         styleClass="tabela" rowClasses="impar,par">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Matrícula" />
+                                    </f:facet>
+                                    #{p.matricula}
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Nome" />
+                                    </f:facet>
+                                    #{p.nome}
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Curso" />
+                                    </f:facet>
+                                    #{p.curso.descricao}
+                                </h:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Ação"/>
+                                    </f:facet>
+
+                                    <p:column>
+                                        <h:commandLink value="Selecionar">
+                                            <f:ajax render=":formConteudoAluno :formTabelaAluno"/>
+                                            <f:setPropertyActionListener value="#{p}" target="#{alunoBean.aluno}"/>
+                                            <f:setPropertyActionListener value="true" target="#{alunoBean.velho}"/>
+                                        </h:commandLink>
+                                    </p:column>
+                                </p:column>
+
+                            </h:dataTable>
+                       </h:form>
+
+
+                      <h:form id="formConfirmaAluno">
+                            <p:confirmDialog message="Confirma a Exclusão?" height="50" showEffect="bounce" hideEffect="explode"
+                                        header="Atenção" severity="alert" widgetVar="confirmationExclusaoAluno">
+
+                                <p:commandButton value="Sim" actionListener="#{alunoBean.excluir}"
+                                      onclick="confirmationExclusaoAluno.hide()" update="formTabelaAluno,formConteudoAluno">
+
+                                </p:commandButton>
+
+                                <p:commandButton value="Não" onclick="confirmationExclusaoAluno.hide()"/>
+                           </p:confirmDialog>
+                       </h:form>
+
+                    </div>
+                </div>
+   
+</html>

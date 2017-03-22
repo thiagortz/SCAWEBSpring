@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+   
+         
+                
+                <div id="blocoConteudoCurso">                    
+                    <div class="conteudo">
+                        
+                        <h:form id="formConteudoCurso">
+                            <div id="blocoMensagem">                                
+                                 <h:outputText value="#{cursoBean.erro}" styleClass="erro"/>
+                            </div>
+                            <fieldset>
+                                <legend>Dados do Curso</legend>
+                                <h:panelGrid columns="4"  styleClass="campos">
+                                    
+                                    <h:outputLabel value="Código:" for="codigo" />
+                                    <h:inputText id="codigo" value="#{cursoBean.curso.codigo}"
+                                                 readonly = "#{cursoBean.velho}"/>
+                                    <h:outputLabel value="Descrição:" for="descricao"/>
+                                    <h:inputTextarea id="descricao" value="#{cursoBean.curso.descricao}"/>
+                                    <h:outputLabel value="Carga Horária:" for="cargaHoraria"/>
+                                    <h:inputText id="cargaHoraria" value="#{cursoBean.curso.cargaHoraria}"/>
+                                    <h:outputLabel value="Número Períodos:" for="numPeriodos"/>
+                                    <h:inputText id="numPeriodos" value="#{cursoBean.curso.numPeriodos}"/>
+                                </h:panelGrid>
+                            </fieldset>
+                        
+                            <h:commandButton value="Gravar" action="#{cursoBean.gravar}">                                
+                                <f:ajax execute="@form" render=":formConteudoCurso :formTabelaCurso"/>    
+                            </h:commandButton>
+
+                            <h:commandButton value="Limpar" action="#{cursoBean.limpar}">
+                                <f:ajax execute="@form" render=":formConteudoCurso :formTabelaCurso"/>
+                            </h:commandButton>
+
+                            <h:commandButton value="Excluir" onclick="confirmationExclusaoCurso.show()">
+                                <f:ajax execute="@form" render=":formConteudoCurso :formTabelaCurso"/>
+                            </h:commandButton>
+
+                            <h:commandButton value="Imprimir">
+                                <p:fileDownload id="cursos.pdf" value="#{cursoBean.imprimir}" />
+                            </h:commandButton>
+
+                            
+
+                        </h:form>
+
+                        <h:form id="formTabelaCurso">
+                            <div id="blocoMensagem">
+                                 <h:outputText value="#{cursoBean.erro}" styleClass="erro"/>
+                            </div>
+                            <p:dataTable value="#{cursoBean.cursos}" var="p"
+                                         paginator="true" rows="5"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink}
+                                         {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}
+                                         {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15">
+                                         
+                                <f:facet name="header">
+                                    Lista de Cursos
+                                </f:facet>
+>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Código" />
+                                    </f:facet>
+                                    #{p.codigo}
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Descrição" />
+                                    </f:facet>
+                                    #{p.descricao}
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Ação"/>
+                                    </f:facet>
+                                    
+                                    <p:column>
+                                        <h:commandLink value="Selecionar">
+                                            <f:ajax render=":formConteudoCurso :formTabelaCurso"/>
+                                            <f:setPropertyActionListener value="#{p}" target="#{cursoBean.curso}"/>
+                                            <f:setPropertyActionListener value="true" target="#{cursoBean.velho}"/>
+                                        </h:commandLink>
+                                    </p:column>
+                                </p:column>
+
+                            </p:dataTable>
+                       </h:form>
+
+                       <h:form id="formConfirmaCurso">
+                            <p:confirmDialog message="Confirma a Exclusão?" height="50" showEffect="bounce" hideEffect="explode"
+                                        header="Atenção" severity="alert" widgetVar="confirmationExclusaoCurso">
+
+                                <p:commandButton value="Sim" actionListener="#{cursoBean.excluir}"
+                                      onclick="confirmationExclusaoCurso.hide()" update="formTabelaCurso,formConteudoCurso">
+
+                                </p:commandButton>
+
+                                <p:commandButton value="Não" onclick="confirmationExclusaoCurso.hide()"/>
+                           </p:confirmDialog>
+                       </h:form>
+                       
+                       
+                       
+                    </div>
+                </div>
+         
+    
+</html>

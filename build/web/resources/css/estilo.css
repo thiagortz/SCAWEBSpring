@@ -1,0 +1,89 @@
+/* Defini��o de estilos para toda a tabela*/
+
+.campos {
+
+   font: 10px Arial, sans-serif;
+
+   font-weight: bold;
+
+   color: Snow;
+
+   background: #A2CD5A;
+
+}
+
+
+.tabela {
+
+     border: 1px solid green;
+
+}
+
+/* Defini��o de estilos para linha de cabe�alho, conteudo e rodape*/
+
+.cabecalho {
+
+   font: 20px Arial, sans-serif;
+
+   font-weight: bold;
+
+   color: Snow;
+
+   background: #A2CD5A;
+
+}
+
+.conteudo {
+
+     border: 2px solid black;
+
+}
+
+.rodape {
+
+   text-align: center;
+
+   font: 11px Arial, sans-serif;
+
+   font-weight: bold;
+
+   color: Snow;
+
+   background:  #008B45;
+
+}
+ 
+
+/* Defini��o de estilos para coluna */
+
+.par {
+
+   text-align: center;
+
+   font: 11px Arial, sans-serif;
+
+   background: #A2CD5A;
+
+}
+
+
+.impar {
+
+   font: 11px Arial, sans-serif;
+
+   text-align: center;
+
+   background: #BCEE68;
+
+}
+
+.erro {
+
+   font: 11px Arial, sans-serif;
+
+   text-align: center;
+
+   background: #ff3333;
+
+}
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:p="http://primefaces.prime.com.tr/ui">
+    
+    <h:body>
+        <ui:composition template="/_template.xhtml">
+            <ui:define name="corpo">
+                <p:tabView>
+                    <p:tab title="Aluno" id="tabAlunos">
+                        <ui:include src="aluno.xhtml"/>
+                    </p:tab>
+                    <p:tab title="Cursos" id="tabCursos">
+                        <ui:include src="curso.xhtml"/>
+                    </p:tab>                    
+                    <p:tab title="Contato" id="tabContato">
+                        <ui:include src="email.xhtml"/>
+                    </p:tab>
+                </p:tabView>
+            </ui:define>
+         </ui:composition> 
+    </h:body>
+</html>
